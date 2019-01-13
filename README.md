@@ -9,7 +9,6 @@ Pixel level operators for raw binary image manipulation (no anti-alaising)
 
 ### Vector tools (to-do)
 - Convert from raster
-- re-sampling (reduce points)
-- sampling: denoise, smooth
-- distortion: 2D boundary constraint / grid 
-- animation
+- Re-sampling: best-fit reduce points, denoise, smooth
+- Distortion: 2D boundary constraint / grid 
+- Animation
