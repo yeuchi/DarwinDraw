@@ -12,3 +12,8 @@ Pixel level operators for raw binary image manipulation (no anti-alaising)
 - Re-sampling: best-fit reduce points, denoise, smooth
 - Distortion: 2D boundary constraint / grid 
 - Animation
+
+## References
+
+1. My Flex demo in actionscript and pixelbenders.
+http://www.ctyeung.com/wordpress/?p=280
