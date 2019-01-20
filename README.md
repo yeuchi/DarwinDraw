@@ -15,7 +15,8 @@ Pixel level operators for raw binary image manipulation (no anti-alaising)
 
 ## References
 
-1. My Flex demo in actionscript and pixelbenders.
+1. My writeup/Flex demo in actionscript and pixelbenders.
    http://www.ctyeung.com/wordpress/?p=280
+   http://www.ctyeung.com/flex/Skeleton/Skeleton.html
 
 2. Digital Image processing by Gonzales and Woods-1st Edition pg 492-493.
