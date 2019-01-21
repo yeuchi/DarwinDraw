@@ -17,8 +17,23 @@ public:
     ~DistanceMap();
 
 public:
-    bool Map();
+    bool Map(AndroidBitmapInfo infoSource,
+             void* pixelsSource,
+             float* pointsX,
+             float* pointsY,
+             int count);
 
+protected:
+    bool CalculateRectBound(int count, float* pointsX, float* pointsY);
+
+    float CalculateMin(int x, int y,
+                        int count, float* pointsX, float* pointsY);
+
+    float CalculateScaler();
+
+protected:
+    int minX, maxX;
+    int minY, maxY;
 };
 
 

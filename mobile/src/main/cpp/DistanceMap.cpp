@@ -3,11 +3,14 @@
 //
 // Module:      DistanceMap.cpp
 //
+// Reference:    http://www.inf.u-szeged.hu/~palagyi/skel/skel.html
+//
 // Description: Demonstrate integration of a C++ class in Android NDK.
 //              Demonstrate skeletonization by evaluating distance map of the blob's outer bounds.
 //
 
 #include <jni.h>
+#include <math.h>
 #include <android/log.h>
 #include <android/bitmap.h>
 #include "Common.h"
@@ -23,10 +26,89 @@ DistanceMap::~DistanceMap() {}
 //////////////////////////////////////////////////////////////////
 // Public
 
-bool DistanceMap::Map()
+/*
+ * apply distance map on to blob
+ */
+bool DistanceMap::Map(AndroidBitmapInfo infoSource,
+                      void* pixelsSource,
+                      float *pointsX,
+                      float *pointsY,
+                      int count)
 {
-    return false;
+    // would a quad tree be faster?
+    // need data structure here for performance.
+
+    // calculate the rectangular bound of the blob within the image
+    if (!CalculateRectBound(count, pointsX, pointsY))
+        return false;
+
+    // calculate the multiplier to scale brightness
+    float scaler = CalculateScaler();
+
+    // evaluate pixels in rectangle
+    for (int y=minY; y<maxY; y++)
+    {
+        void* currentPixelsSource = (char *)pixelsSource + (infoSource.stride * (y));
+        rgba * line = (rgba *) currentPixelsSource;
+
+        for(int x=minX; x<maxX; x++)
+        {
+            // edit pixels that are in the black fill blob
+            if(line[x].red ==0 && line[x].green==0 && line[x].blue==0)
+            {
+                // calculate distance
+                int min = (int)(CalculateMin(x, y, count, pointsX, pointsY) * scaler);
+                line[x].red = min;
+                line[x].green = min;
+                line[x].blue = min;
+            }
+        }
+    }
+
+    return true;
 }
 
 //////////////////////////////////////////////////////////////////
 // Protect / Private
+
+/*
+ * Find the nearest rect bounds around the blob
+ */
+bool DistanceMap::CalculateRectBound(int count,
+                                     float* pointsX, float* pointsY)
+{
+    
+}
+
+/*
+ * Find the closest blob point
+ * return calculated distance
+ */
+float DistanceMap::CalculateMin(int x, int y,
+                                int count,
+                                float* pointsX, float* pointsY)
+{
+    float min = 1000;
+    for(int i=0; i<count; i++)
+    {
+        float deltaY = pointsY[i] - y;
+        float deltaX = pointsX[i] - x;
+        float dis = sqrtf(deltaY*deltaY - deltaX*deltaX);
+
+        if(dis < min)
+            min = dis;
+    }
+    return min;
+}
+
+/*
+ * Assume a relative square rect,
+ * max distance is 1/2 of width or height.
+ */
+float DistanceMap::CalculateScaler()
+{
+    float width = (maxX - minX) / 2.0;
+    float height = (maxY - minY) / 2.0;
+    float min = (width<height)?width:height;
+    return 255.0 / min;
+}
