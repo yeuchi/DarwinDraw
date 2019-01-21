@@ -103,13 +103,15 @@ Java_com_ctyeung_darwindraw_MainActivity_distanceMapFromJNI(
         JNIEnv *env,
         jobject obj,
         jobject bitmapSource,
-        jobject bitmapDestination)
+        jfloat *pointsX,
+        jfloat *pointsY,
+        jint count)
 {
-    initializeBitmaps(env, bitmapSource, bitmapDestination);
+    initializeBitmap(env, bitmapSource);
 
     DistanceMap distanceMap;
-    distanceMap.Map();
+    distanceMap.Map(infoSource, pixelsSource, pointsX, pointsY, count);
 
     LOGI("unlocking pixels");
-    releaseBitmaps(env, bitmapSource, bitmapDestination);
+    releaseBitmap(env, bitmapSource);
 }

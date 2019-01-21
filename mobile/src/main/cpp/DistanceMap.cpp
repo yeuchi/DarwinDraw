@@ -77,7 +77,31 @@ bool DistanceMap::Map(AndroidBitmapInfo infoSource,
 bool DistanceMap::CalculateRectBound(int count,
                                      float* pointsX, float* pointsY)
 {
-    
+    float minX = 10000;
+    float maxX = 0;
+
+    for (int x = 0; x < count; x ++)
+    {
+        if(pointsX[x] < minX)
+            minX = pointsX[x];
+
+        if(pointsX[x] > maxX)
+            maxX = pointsX[x];
+    }
+
+    float minY = 10000;
+    float maxY = 0;
+
+    for (int y = 0; y < count; y ++)
+    {
+        if(pointsY[y] < minY)
+            minY = pointsY[y];
+
+        if(pointsY[y] > maxY)
+            maxY = pointsY[y];
+    }
+
+    return (minX < 10000 || maxX > 0 || minY < 10000 || maxY > 0)? true:false;
 }
 
 /*
