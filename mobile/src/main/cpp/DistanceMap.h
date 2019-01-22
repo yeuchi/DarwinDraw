@@ -24,10 +24,10 @@ public:
              int count);
 
 protected:
-    bool CalculateRectBound(int count, float* pointsX, float* pointsY);
+    bool CalculateRectBound(int count, jfloat* pointsX, jfloat* pointsY);
 
     float CalculateMin(int x, int y,
-                        int count, float* pointsX, float* pointsY);
+                        int count, jfloat* pointsX, jfloat* pointsY);
 
     float CalculateScaler();
 

@@ -31,8 +31,8 @@ DistanceMap::~DistanceMap() {}
  */
 bool DistanceMap::Map(AndroidBitmapInfo infoSource,
                       void* pixelsSource,
-                      float *pointsX,
-                      float *pointsY,
+                      jfloat *pointsX,
+                      jfloat *pointsY,
                       int count)
 {
     // would a quad tree be faster?
@@ -75,7 +75,7 @@ bool DistanceMap::Map(AndroidBitmapInfo infoSource,
  * Find the nearest rect bounds around the blob
  */
 bool DistanceMap::CalculateRectBound(int count,
-                                     float* pointsX, float* pointsY)
+                                     jfloat* pointsX, jfloat* pointsY)
 {
     float minX = 10000;
     float maxX = 0;
@@ -110,7 +110,7 @@ bool DistanceMap::CalculateRectBound(int count,
  */
 float DistanceMap::CalculateMin(int x, int y,
                                 int count,
-                                float* pointsX, float* pointsY)
+                                jfloat* pointsX, jfloat* pointsY)
 {
     float min = 1000;
     for(int i=0; i<count; i++)

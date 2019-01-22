@@ -103,14 +103,25 @@ Java_com_ctyeung_darwindraw_MainActivity_distanceMapFromJNI(
         JNIEnv *env,
         jobject obj,
         jobject bitmapSource,
-        jfloat *pointsX,
-        jfloat *pointsY,
+        jfloatArray pointsX,
+        jfloatArray pointsY,
         jint count)
 {
+    jfloat *c_arrayX, *c_arrayY;
+
+    // get a pointer to the array
+    c_arrayX = env->GetFloatArrayElements(pointsX, NULL);
+    c_arrayY = env->GetFloatArrayElements(pointsY, NULL);
+
+    // do some exception checking
+    if (c_arrayX == NULL || c_arrayY == NULL) {
+        return; // exception occurred
+    }
+
     initializeBitmap(env, bitmapSource);
 
     DistanceMap distanceMap;
-    distanceMap.Map(infoSource, pixelsSource, pointsX, pointsY, count);
+    distanceMap.Map(infoSource, pixelsSource, c_arrayX, c_arrayY, count);
 
     LOGI("unlocking pixels");
     releaseBitmap(env, bitmapSource);
