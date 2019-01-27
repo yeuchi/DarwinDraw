@@ -16,11 +16,13 @@ import java.util.List;
 
 public class MyPaperView extends View
 {
-    private final int paintColor = Color.BLACK;
+    private final int strokeColor = Color.BLACK;
+    private final int fillColor = Color.GREEN;
     // defines paint and canvas
     private Paint drawPaint;
     private Path path;
     protected List<MyPoint> points;
+    private PaperEvent mListener;
 
     public MyPaperView(Context context,
                           AttributeSet attrs) {
@@ -33,9 +35,32 @@ public class MyPaperView extends View
         //path.setFillType(Path.FillType.WINDING);
     }
 
+    public void setListener(PaperEvent listener)
+    {
+        mListener = listener;
+    }
+
+    public List<MyPoint> getPoints()
+    {
+        return points;
+    }
+
     @Override
     protected void onDraw(Canvas canvas)
     {
+        // stroke style
+        drawPaint = new Paint();
+        drawPaint.setAntiAlias(true);
+        drawPaint.setStrokeWidth(5);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        drawPaint.setColor(strokeColor);
+        canvas.drawPath(path, drawPaint);
+
+        // fill style
+        drawPaint.setStyle(Paint.Style.FILL);
+        drawPaint.setColor(fillColor);
         canvas.drawPath(path, drawPaint);
     }
 
@@ -58,6 +83,7 @@ public class MyPaperView extends View
                 break;
 
             case MotionEvent.ACTION_UP:
+                mListener.onActionUp();
                 break;
 
             default:
@@ -70,13 +96,17 @@ public class MyPaperView extends View
 
     // Setup paint with color and stroke styles
     private void setupPaint() {
+        // stroke style
         drawPaint = new Paint();
-        drawPaint.setColor(paintColor);
         drawPaint.setAntiAlias(true);
         drawPaint.setStrokeWidth(5);
-        drawPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        drawPaint.setStyle(Paint.Style.STROKE);
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        drawPaint.setColor(strokeColor);
 
+        // fill style
+        drawPaint.setStyle(Paint.Style.FILL);
+        drawPaint.setColor(fillColor);
     }
 }

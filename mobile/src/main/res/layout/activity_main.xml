@@ -30,7 +30,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <com.ctyeung.darwindraw.MyPaperView
-            android:id="@+id/view"
+            android:id="@+id/paper"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:background="@color/colorWhite"/>
@@ -40,12 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
             android:orientation="horizontal">
-
-            <Button android:id="@+id/btnAddLine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{() -> listener.onClickButtonNew()}"
-                android:text="new"/>
 
             <Button android:id="@+id/btnDeleteLine"
                 android:layout_width="wrap_content"

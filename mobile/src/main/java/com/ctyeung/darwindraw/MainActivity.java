@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import com.ctyeung.darwindraw.viewModels.ActivityMainViewModel;
 import com.ctyeung.darwindraw.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements PaperEvent{
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -23,43 +25,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActivityMainBinding mBinding;
+    private MyPaperView paper;
+    /*
+     * shape drawn, call skeletonization code
+     */
+    public void onActionUp()
+    {
+        List<MyPoint> points = paper.getPoints();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.setListener(this);
-    }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
-    public void onClickButtonNew()
-    {
-
+        paper = this.findViewById(R.id.paper);
+        paper.setListener(this);
     }
 
     public void onClickButtonDelete()
