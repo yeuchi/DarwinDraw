@@ -45,21 +45,25 @@ public class MainActivity extends AppCompatActivity implements PaperEvent{
         }
 
         // create bitmap
-        BoundRect boundRect = new BoundRect(1000, 0, 1000, 0);
-        Bitmap bmp = BitmapUtil.renderView(paper, boundRect);
+        BoundRect boundRect = new BoundRect(10000, 0, 10000, 0);
+        for(int i=0; i<points.size(); i++) {
+            MyPoint p = points.get(i);
+            boundRect.find(p);
+        }
 
         pointsX = new float[points.size()];
         pointsY = new float[points.size()];
-        for(int i=0; i<points.size(); i++)
+        for(int j=0; j<points.size(); j++)
         {
-            MyPoint p = points.get(i);
+            MyPoint p = points.get(j);
 
             // normalize the points for selected rect bound data
-            pointsX[i] = p.x - boundRect.minX;
-            pointsY[i] = p.y - boundRect.minY;
+            pointsX[j] = p.x - boundRect.minX;
+            pointsY[j] = p.y - boundRect.minY;
         }
 
         // draw skeleton
+        Bitmap bmp = BitmapUtil.renderView(paper, boundRect);
         distanceMapFromJNI(bmp, pointsX, pointsY, points.size());
 
         // insert image into canvas

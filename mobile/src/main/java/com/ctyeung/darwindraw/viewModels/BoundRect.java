@@ -29,7 +29,7 @@ public class BoundRect
         if(p.y < minY)
             minY = p.y;
 
-        if(p.y > minY)
+        if(p.y > maxY)
             maxY = p.y;
     }
 
