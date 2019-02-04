@@ -24,6 +24,9 @@ public class MyPaperView extends View
     protected List<MyPoint> points;
     private PaperEvent mListener;
 
+    public int width;
+    public int height;
+
     public MyPaperView(Context context,
                           AttributeSet attrs) {
         super(context, attrs);
@@ -62,6 +65,13 @@ public class MyPaperView extends View
         drawPaint.setStyle(Paint.Style.FILL);
         drawPaint.setColor(fillColor);
         canvas.drawPath(path, drawPaint);
+    }
+
+    @Override
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        height= MeasureSpec.getSize(heightMeasureSpec);
+        width= MeasureSpec.getSize(widthMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
 

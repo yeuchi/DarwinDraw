@@ -20,6 +20,19 @@ allprojects {
         google()
         jcenter()
     }
+
+    task copyCfgFile(type:Copy, dependsOn: "assembleDebug") {
+        from file("src/familyphoto.png")
+        into file("src/test/familyphoto.png")
+        println 'Hello Gradle'
+    }
+
+    task copyImageFile(type:Copy, dependsOn: "assembleDebug") {
+        from file("src/familyphoto.png")
+        into file("$buildDir/tmp/familyphoto.png")
+        println 'copyImageFile'
+    }
+    copyCfgFile.execute()
 }
 
 task clean(type: Delete) {
